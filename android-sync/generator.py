@@ -17,7 +17,7 @@ def main():
 
             pipeline['steps'].append({
                 'label': 'sync {} {}'.format(host, version),
-                'command':  "cd /lineage/{} &&  repo sync --prune --no-tags --force-remove-dirty --force-sync --verbose -j128""".format(version, version),
+                'command':  "cd /exodus/{} &&  repo sync --prune --no-tags --force-remove-dirty --force-sync --verbose -j128""".format(version, version),
                 'agents': ['queue={}'.format(host)],
             })
 

@@ -32,14 +32,14 @@ export BUILD_NUMBER=$(($OFFSET + $BUILDKITE_BUILD_NUMBER))
 
 echo "--- Syncing"
 
-mkdir -p /lineage/${VERSION}/.repo/local_manifests
-cd /lineage/${VERSION}
+mkdir -p /exodus/${VERSION}/.repo/local_manifests
+cd /exodus/${VERSION}
 rm -rf .repo/local_manifests/*
-if [ -f /lineage/setup.sh ]; then
-    source /lineage/setup.sh
+if [ -f /exodus/setup.sh ]; then
+    source /exodus/setup.sh
 fi
 # catch SIGPIPE from yes
-yes | repo init -u https://github.com/lineageos/android.git -b ${VERSION} -g default,-darwin || if [[ $? -eq 141 ]]; then true; else false; fi
+yes | repo init -u https://github.com/exodusos/android.git -b ${VERSION} -g default,-darwin || if [[ $? -eq 141 ]]; then true; else false; fi
 
 echo "Syncing"
 repo sync --detach --current-branch --no-tags --force-remove-dirty --force-sync -j32 > /tmp/android-sync.log 2>&1
@@ -67,9 +67,7 @@ export OVERRIDE_TARGET_FLATTEN_APEX=true
 mka otatools-package target-files-package dist > /tmp/android-build.log
 
 echo "--- Uploading"
-ssh jenkins@blob.lineageos.org mkdir -p /home/jenkins/incoming/${DEVICE}/${BUILD_UUID}/
-scp out/dist/*target_files*.zip jenkins@blob.lineageos.org:/home/jenkins/incoming/${DEVICE}/${BUILD_UUID}/
-scp out/target/product/${DEVICE}/otatools.zip jenkins@blob.lineageos.org:/home/jenkins/incoming/${DEVICE}/${BUILD_UUID}/
+scp out/dist/*target_files*.zip melles1991@frs.sourceforge.net:/home/frs/project/exodusos/ExodusOS/${DEVICE}/
 
 echo "--- cleanup"
 rm -rf out

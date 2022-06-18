@@ -63,7 +63,7 @@ RUN apt update && DEBIAN_FRONTEND=noninteractive apt install -y \
 
 RUN curl -sLo /usr/local/bin/repo https://commondatastorage.googleapis.com/git-repo-downloads/repo && chmod +x /usr/local/bin/repo
 
-RUN mkdir /lineage
+RUN mkdir /exodus
 RUN mkdir /ccache
 
 ENV USE_CCACHE=1
